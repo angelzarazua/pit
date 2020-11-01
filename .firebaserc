@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "pit-app": {
+      "hosting": {
+        "pit": [
+          "pit-app"
+        ]
+      }
+    }
+  }
+}

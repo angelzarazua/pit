@@ -121,8 +121,16 @@
               "devServerTarget": "pit:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
-  "defaultProject": "pit"
+    }
+  },
+  "defaultProject": "pit",
+  "cli": {
+    "analytics": "a97a997f-c6dd-4aa0-87fb-e5f08f92877f"
+  }
 }
