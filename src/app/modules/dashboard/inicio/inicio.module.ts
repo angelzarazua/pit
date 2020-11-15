@@ -1,17 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InicioComponent } from './inicio.component';
-import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [
-  { path: '', component:  InicioComponent}
-]
+import { InicioRoutingModule } from './inicio-routing.module';
+import { InicioComponent } from './inicio.component';
+import { RouterModule } from '@angular/router';
+import { CrearGrupoComponent } from '../crear-grupo/crear-grupo.component';
+
 
 @NgModule({
-  declarations: [InicioComponent],
+  declarations: [InicioComponent, CrearGrupoComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes)
-  ]
+    InicioRoutingModule
+  ],
+  exports: [RouterModule]
+
 })
 export class InicioModule { }

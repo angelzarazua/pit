@@ -11,45 +11,119 @@
                     <span class="focus-input100"></span>
                     <span class="label-input100">Nombre(s)</span>
                 </div>
+                <div class="validation-errors">
+					<ng-container *ngFor="let validation of validationMessages.nombres">
+						<div class="error-message alert alert-danger"
+							*ngIf="formRegistro.get('nombres').hasError(validation.type) && (formRegistro.get('nombres').dirty || formRegistro.get('nombres').touched)">
+							{{ validation.message }}
+						</div>
+					</ng-container>
+				</div>
 
                 <div class="wrap-input100 validate-input">
                     <input class="input100" type="text" name="Apellido Paterno" formControlName="apellido_paterno">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Apellido Paterno</span>
                 </div>
+                <div class="validation-errors">
+					<ng-container *ngFor="let validation of validationMessages.apellido_paterno">
+						<div class="error-message alert alert-danger"
+							*ngIf="formRegistro.get('apellido_paterno').hasError(validation.type) && (formRegistro.get('apellido_paterno').dirty || formRegistro.get('apellido_paterno').touched)">
+							{{ validation.message }}
+						</div>
+					</ng-container>
+				</div>
 
                 <div class="wrap-input100 validate-input">
                     <input class="input100" type="text" name="Apellido Materno" formControlName="apellido_materno">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Apellido Materno</span>
                 </div>
+                <div class="validation-errors">
+					<ng-container *ngFor="let validation of validationMessages.apellido_materno">
+						<div class="error-message alert alert-danger"
+							*ngIf="formRegistro.get('apellido_materno').hasError(validation.type) && (formRegistro.get('apellido_materno').dirty || formRegistro.get('apellido_materno').touched)">
+							{{ validation.message }}
+						</div>
+					</ng-container>
+				</div>
 
                 <div class="wrap-input100 validate-input">
-                    <input class="input100" type="number" name="Número de lista" formControlName="username"
+                    <input class="input100" type="number" name="Número de lista" formControlName="numero_lista"
                         formControlName="numero_lista">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Número de lista</span>
                 </div>
+                <div class="validation-errors">
+					<ng-container *ngFor="let validation of validationMessages.numero_lista">
+						<div class="error-message alert alert-danger"
+							*ngIf="formRegistro.get('numero_lista').hasError(validation.type) && (formRegistro.get('numero_lista').dirty || formRegistro.get('numero_lista').touched)">
+							{{ validation.message }}
+						</div>
+					</ng-container>
+				</div>
 
                 <div class="wrap-input100 validate-input">
                     <input class="input100" type="email" name="email" formControlName="email">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Correo</span>
                 </div>
+                <div class="validation-errors">
+					<ng-container *ngFor="let validation of validationMessages.email">
+						<div class="error-message alert alert-danger"
+							*ngIf="formRegistro.get('email').hasError(validation.type) && (formRegistro.get('email').dirty || formRegistro.get('email').touched)">
+							{{ validation.message }}
+						</div>
+					</ng-container>
+				</div>
 
                 <div class="wrap-input100 validate-input">
                     <input class="input100" type="password" formControlName="password">
                     <span class="focus-input100"></span>
                     <span class="label-input100">Contraseña</span>
                 </div>
+                <div class="validation-errors">
+					<ng-container *ngFor="let validation of validationMessages.password">
+						<div class="error-message alert alert-danger"
+							*ngIf="formRegistro.get('password').hasError(validation.type) && (formRegistro.get('password').dirty || formRegistro.get('password').touched)">
+							{{ validation.message }}
+						</div>
+					</ng-container>
+                </div>
+                
+                <div class="wrap-input100 validate-input">
+                    <input class="input100" type="password" formControlName="confirmarPassword">
+                    <span class="focus-input100"></span>
+                    <span class="label-input100">Confirma la contraseña</span>
+                </div>
+                <div class="validation-errors">
+					<ng-container *ngFor="let validation of validationMessages.confirmarPassword">
+						<div class="error-message alert alert-danger"
+							*ngIf="formRegistro.hasError('noSonIguales') && formRegistro.get('password').dirty && formRegistro.get('confirmarPassword').dirty">
+							{{ validation.message }}
+						</div>
+					</ng-container>
+                </div>
+                
 
+
+                <div *ngIf="mostrarError" #alert
+                    class="alert alert-danger  alert-dismissible fade show login100-form-title" role="alert">
+                    <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <strong class="msgError">{{ msgError }} </strong>
+                </div>
+                <!-- {{ formRegistro.hasError() }} -->
 
                 <div class="container-login100-form-btn">
-                    <button class="login100-form-btn" (click)="registrarse()" type="button"> Registrarse </button>
+                    <button class="btn btn- login100-form-btn" (click)="registrarse()" type="submit"
+                        [disabled]="formRegistro.invalid"> Registrarse </button>
                 </div>
 
                 <div class="registro login100-form-title mt-3">
-                    <p>¿Ya tienes una cuenta? <span class="registro-link" [routerLink]="['/iniciar-sesion']">Inicia sesión</span>
+                    <p>¿Ya tienes una cuenta? <span class="registro-link" [routerLink]="['/iniciar-sesion']">Inicia
+                            sesión</span>
                     </p>
                 </div>
             </form>

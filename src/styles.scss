@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 .account-page .main-wrapper {
-	display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
@@ -41,16 +41,16 @@
   background: #f2f2f2;
 }
 
-.container-login100-form-btn {
-  width: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+// .container-login100-form-btn {
+//   width: 100%;
+//   display: -webkit-box;
+//   display: -webkit-flex;
+//   display: -moz-box;
+//   display: -ms-flexbox;
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: center;
+// }
 
 .wrap-login100 {
   width: 100%;
@@ -86,12 +86,118 @@
   text-align: center;
 }
 
+
+/*------------------------------------------------------------------
+[ Responsive ]*/
+
+@media (max-width: 992px) {
+  .login100-form {
+    width: 50%;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .login100-more {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .login100-form {
+    width: 100%;
+  }
+
+  .login100-more {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .login100-form {
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 70px;
+  }
+}
+
+
 /*------------------------------------------------------------------
 [ Alert validate ]*/
 
 .validate-input {
   position: relative;
 }
+
+.alert-validate::before {
+  content: attr(data-validate);
+  position: absolute;
+  z-index: 100;
+  max-width: 70%;
+  background-color: #fff;
+  border: 1px solid #c80000;
+  border-radius: 2px;
+  padding: 4px 25px 4px 10px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 12px;
+  pointer-events: none;
+
+  font-family: Poppins-Regular;
+  color: #c80000;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: left;
+
+  visibility: hidden;
+  opacity: 0;
+
+  -webkit-transition: opacity 0.4s;
+  -o-transition: opacity 0.4s;
+  -moz-transition: opacity 0.4s;
+  transition: opacity 0.4s;
+}
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('./assets/fonts/fontawesome-webfont.eot?v=4.7.0');
+  // src: url('./assets/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('./assets/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('./assets/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('./assets/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('./assets/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.alert-validate::after {
+  content: "\f12a";
+  font-family: FontAwesome;
+  display: block;
+  position: absolute;
+  z-index: 110;
+  color: #c80000;
+  font-size: 16px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 18px;
+}
+
+.alert-validate:hover:before {
+  visibility: visible;
+  opacity: 1;
+}
+
+@media (max-width: 992px) {
+  .alert-validate::before {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
 
 /*------------------------------------------------------------------
 [ Input ]*/
@@ -137,13 +243,12 @@
   font-size: 13px;
 }
 
-.has-val {
-  height: 48px !important;
+.input100:focus {
+  height: 48px;
 }
 
-.has-val+.focus-input100+.label-input100 {
-  top: 14px;
-  font-size: 13px;
+.has-val {
+  height: 48px !important;
 }
 
 .input100 {
@@ -261,6 +366,13 @@ input:-ms-input-placeholder {
   justify-content: center;
 }
 
+.btn:hover {
+  color: #fff;
+  .btn:disabled {
+    color: #fff;
+  }
+}
+
 .login100-form-btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -288,9 +400,9 @@ input:-ms-input-placeholder {
   transition: all 0.4s;
 }
 
-.login100-form-btn:hover {
-  background: #28369c;
-}
+// .login100-form-btn:hover {
+//   background: #28369c;
+// }
 
 /*---------------------------------------------*/
 
@@ -323,26 +435,28 @@ button {
   background: transparent;
 }
 
-button:hover {
-  cursor: pointer;
-}
+// button:hover {
+//   cursor: pointer;
+// }
 
 .my-image {
   background-image: url("/assets/imagenes/work-portada2.jpg");
 }
 
-.registro{
-    font-family: 'Montserrat', sans-serif;
-    font-size: 13px;
-    color: #808080;
-    .registro-link{
-      color: #4d4d4d;
-    }
-    .registro-link:hover{
-        color: #28369c;
-        cursor: pointer;
-        text-decoration: underline;
-    }
+.registro {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: #808080;
+
+  .registro-link {
+    color: #4d4d4d;
+  }
+
+  .registro-link:hover {
+    color: #28369c;
+    cursor: pointer;
+    text-decoration: underline;
+  }
 }
 
 .logo {
@@ -370,3 +484,11 @@ button:hover {
   border-radius: 5px;
 }
 
+.validation-errors {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.msgError {
+  font-size: 14px;
+}

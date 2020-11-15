@@ -1,8 +1,9 @@
-import { DatePipe } from '@angular/common';
-import { Injectable } from '@angular/core';
+import { DatePipe, JsonPipe } from '@angular/common';
+import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Usuario } from '../../../shared/models/local';
 
 
@@ -11,15 +12,25 @@ import { Usuario } from '../../../shared/models/local';
 })
 export class AuthService {
   private pathCollectionUsuarios: AngularFirestoreCollection;
+  public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
 
   constructor(
     private afs: AngularFirestore,   // Inject Firestore service
     private afAuth: AngularFireAuth, // Inject Firebase auth service
     private router: Router,
-    private datepipe: DatePipe
+    private datepipe: DatePipe,
+    private ngZone: NgZone
   ) {
     this.pathCollectionUsuarios = this.afs.collection("usuarios");
+    const usuario = localStorage.getItem('uid')
+    if (usuario != null || usuario != undefined) {
+      this.loggedIn.next(true);
+    }
+  }
+
+  get isLoggedIn() {
+    return this.loggedIn.asObservable()
   }
 
   async crearUsuario(usuario: Usuario, password: string) {
@@ -28,36 +39,33 @@ export class AuthService {
       const userFirebase = res.user;
       this.setDatosUsuario(userFirebase, usuario).catch(error => console.error(error))
 
-    } catch (error_1) {
+    } catch (error) {
       // Handle Errors here.
-      const errorCode = error_1.code;
-      const errorMessage = error_1.message;
-      console.log(error_1);
-      return errorCode;
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.error(errorCode + ' ' + errorMessage);
+      return error;
     }
   }
 
   async iniciarSesion(usuario) {
     try {
       const res = await this.afAuth.signInWithEmailAndPassword(usuario.email, usuario.password);
-      this.getUsuario(res.user.uid).then(() =>{
+      this.getUsuario(res.user.uid).then(() => {
+        this.loggedIn.next(true);
         this.router.navigate(['/inicio']);
-        // location.href = "inicio"
+        return { code: false }
       });
-      } catch (error) {
+    } catch (error) {
       var errorCode = error.code;
       var errorMessage = error.message;
-      if (errorCode === 'auth/wrong-password') {
-        return '400'
-      } else {
-        console.error(error);
-        return errorMessage
-      }
+      console.error(errorCode + ' ' + errorMessage);
+      return error
     }
   }
 
   setDatosUsuario(usuarioFirebase, usuario) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const datosUsuario: Usuario = {
         apellido_materno: usuario.apellido_materno,
         apellido_paterno: usuario.apellido_paterno,
@@ -75,8 +83,10 @@ export class AuthService {
         .then(() => {
           console.log("Documento creado");
           localStorage.setItem('usuario', JSON.stringify(datosUsuario))
+          localStorage.setItem('uid', JSON.stringify(datosUsuario.uid));
+          this.loggedIn.next(true);
           this.router.navigate(['/inicio']);
-        }).catch((error) => { console.error(error)});
+        }).catch((error) => { console.error(error) });
 
       return resolve()
     })
@@ -88,6 +98,7 @@ export class AuthService {
         if (doc.exists) {
           console.log("Document data:", doc.data());
           localStorage.setItem('usuario', JSON.stringify(doc.data()));
+          localStorage.setItem('uid', JSON.stringify(doc.data().uid));
         } else {
           // doc.data() will be undefined in this case
           console.log("El documento no existe!");
@@ -102,10 +113,22 @@ export class AuthService {
 
   cerrarSesion() {
     return this.afAuth.signOut().then(() => {
-      localStorage.removeItem('usuario');
+      localStorage.clear()
+      this.loggedIn.next(false);
       this.router.navigate(['/iniciar-sesion']);
     })
   }
 
+  isLogged() {
+    this.afAuth.user.subscribe(user => {
+      console.log('isLogged: ', user);
+      if (user != null) {
+        this.loggedIn.next(true);
+      } else {
+        this.loggedIn.next(false);
+      }
+
+    });
+  }
 }
 
