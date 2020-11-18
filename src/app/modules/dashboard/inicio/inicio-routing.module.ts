@@ -5,16 +5,11 @@ import { InicioComponent } from './inicio.component';
 
 const routes: Routes = [
   {
-    path: '', component: InicioComponent, children: [
-      {
-        path: 'crear-grupo', component: CrearGrupoComponent
-      }
-    ]
+    path: '', component: InicioComponent
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes)]
 })
 export class InicioRoutingModule { }
