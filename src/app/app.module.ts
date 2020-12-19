@@ -12,12 +12,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { IniciarSesionComponent } from './modules/auth/iniciar-sesion/iniciar-sesion.component';
 import { RegistrarseComponent } from './modules/auth/registrarse/registrarse.component';
-import { NavBarComponent } from './modules/dashboard/nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavBarComponent,
     RegistrarseComponent,
     IniciarSesionComponent,
   ],

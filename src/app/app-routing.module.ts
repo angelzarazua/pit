@@ -9,7 +9,7 @@ const routes: Routes = [
 
   {
     path: '',
-    loadChildren: () => import('../app/modules/dashboard/inicio/inicio.module').then(m => m.InicioModule),
+    loadChildren: () => import('../app/modules/dashboard/dashboard.module').then(m => m.DashboardModule),
     canActivate: [AuthGuard]
     // , data: { preload: true }
   },
@@ -36,3 +36,5 @@ export class AppRoutingModule { }
 //     expectedRole: 'admin'
 //   } 
 // }
+
+// #k35374a

@@ -1,9 +1,9 @@
-import { DatePipe, JsonPipe } from '@angular/common';
-import { Injectable, NgZone } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Usuario } from '../../../shared/models/local';
 
 
@@ -19,8 +19,7 @@ export class AuthService {
     private afs: AngularFirestore,   // Inject Firestore service
     private afAuth: AngularFireAuth, // Inject Firebase auth service
     private router: Router,
-    private datepipe: DatePipe,
-    private ngZone: NgZone
+    private datepipe: DatePipe
   ) {
     this.pathCollectionUsuarios = this.afs.collection("usuarios");
     const usuario = localStorage.getItem('uid')
@@ -65,7 +64,7 @@ export class AuthService {
   }
 
   setDatosUsuario(usuarioFirebase, usuario) {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       const datosUsuario: Usuario = {
         apellido_materno: usuario.apellido_materno,
         apellido_paterno: usuario.apellido_paterno,
@@ -93,12 +92,12 @@ export class AuthService {
   }
 
   getUsuario(uid) {
-    return new Promise((resolve) => {
+    return new Promise<void>((resolve) => {
       this.pathCollectionUsuarios.doc(uid).get().subscribe((doc) => {
         if (doc.exists) {
           console.log("Document data:", doc.data());
           localStorage.setItem('usuario', JSON.stringify(doc.data()));
-          localStorage.setItem('uid', JSON.stringify(doc.data().uid));
+          localStorage.setItem('uid', doc.data().uid);
         } else {
           // doc.data() will be undefined in this case
           console.log("El documento no existe!");

@@ -1,10 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { InicioComponent } from './inicio/inicio.component';
+import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [
   {
-    path: '', component: InicioComponent
+    path: '', component: DashboardComponent, children: [
+      {
+        path: '', loadChildren: () => import('./inicio/inicio.module').then(m => m.InicioModule)
+      },
+      {
+        path: 'crear-grupo', loadChildren: () => import('./crear-grupo/crear-grupo.module').then(m => m.CrearGrupoModule)
+      }
+    ]
   }
 ];
 

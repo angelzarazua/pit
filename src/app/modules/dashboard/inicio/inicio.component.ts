@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { GruposService } from 'src/app/core/services/grupos/grupos.service';
 import { Usuario } from '../../../shared/models/local';
 
 
@@ -9,18 +10,34 @@ import { Usuario } from '../../../shared/models/local';
   styleUrls: ['./inicio.component.scss']
 })
 export class InicioComponent implements OnInit {
-  usuario = of(localStorage.getItem('usuario'))
-  loadUsuarios: Promise<boolean>;
-  
+  // usuario = of(localStorage.getItem('usuario'))
+  uid: string = localStorage.getItem('uid')
+  grupos: any = []
 
-
-  constructor() {  }
+  constructor(private grupoSerevice: GruposService) { }
 
   ngOnInit(): void {
-    console.log(this.usuario);
-    this.usuario.subscribe(next => console.log(JSON.parse(next).uid))
-    //  forEach(next => console.log(JSON.parse(next).uid))    
+    // this.usuario.subscribe(next => console.log(JSON.parse(next).uid))
+    this.obtenerGrupos()
+  }
 
+  obtenerGrupos() {
+    this.grupoSerevice.obtenerGruposPorIdUsuario(this.uid).subscribe(res => {
+      this.grupos = res
+      console.log(res);
+    })
+  }
+
+  irGrupo(grupoId: string) {
+    console.log(grupoId);
+    this.obtenerGrupoPorId(grupoId)
+    
+  }
+
+  obtenerGrupoPorId(grupoId: string) {
+    this.grupoSerevice.obtenerGrupoPorId(grupoId).subscribe(res => {
+      console.log(res);      
+    })
   }
 
 }
