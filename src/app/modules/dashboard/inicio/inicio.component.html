@@ -1,4 +1,20 @@
-<p>inicio works!</p>
-<div>{{usuario}}</div>
-<!-- <router-outlet></router-outlet> -->
+<div class="container">
+    <h2>Bienvenido amigo</h2>
+    <!-- <router-outlet></router-outlet> -->
+    <h5 class="mt-3">Tus Grupos</h5>
 
+    <div class="row">
+        <div *ngFor="let grupo of grupos">
+            <div class="col mt-4">
+                <div class="card" style="width: 18rem;">
+                    <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                    <div class="card-body">
+                        <h5 class="card-title">{{grupo.nombre}}</h5>
+                        <p class="card-text">{{ grupo.descripcion }}</p>
+                        <a [routerLink]="" class="btn btn-primary" (click)="irGrupo( grupo.grupo_id )">Ir</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

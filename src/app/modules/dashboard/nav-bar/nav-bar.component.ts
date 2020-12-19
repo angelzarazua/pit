@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoggedIn$ = this.afAuth.isLoggedIn;
-    console.log(this.isLoggedIn$);
+    // console.log(this.isLoggedIn$);
     // console.log(this.afAuth.isLoggedLocal());
     
     // if (this.afAuth.isLoggedLocal()) {
