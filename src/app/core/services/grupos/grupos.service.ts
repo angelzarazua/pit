@@ -5,6 +5,7 @@ import { Grupo, Usuario_Grupo, Rol } from '../../../shared/models/local';
 import { Router } from '@angular/router';
 import { IService } from 'src/app/shared/interfaces/IService';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 
 
@@ -34,7 +35,6 @@ export class GruposService {
 
   async crearGrupo(grupo: Grupo, usuarioId: string) {
     try {
-      // grupo.created_at = this.datepipe.transform(new Date(), 'long')
       grupo.created_at = new Date()
       const docRef = await this.refCollectionGrupos.add(grupo)
       const rol = Rol.admin
@@ -63,11 +63,11 @@ export class GruposService {
 
   obtenerGruposPorIdUsuario(usuarioId: string)/*: AngularFirestoreCollection<Usuario_Grupo>*/ {
     return this.afs.collection(this.pathGruposUsuarios, ref =>
-      ref.where('usuario_id', "==", usuarioId)
+      ref.where('usuario_id', "==", usuarioId).orderBy('created_at')
     ).valueChanges()
   }
 
-  obtenerGrupoPorId(grupoId: string)/*: AngularFirestoreCollection<Grupo>*/ {
+  obtenerGrupoPorId(grupoId: string): Observable<any>/*: AngularFirestoreCollection<Grupo>*/ {
     return this.refCollectionGrupos.doc(grupoId).snapshotChanges().pipe(
       map(changes =>
         changes.payload.data()

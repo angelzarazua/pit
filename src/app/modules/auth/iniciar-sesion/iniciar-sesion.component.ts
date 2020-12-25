@@ -53,12 +53,6 @@ export class IniciarSesionComponent implements OnInit {
     this.jQuery();
   }
 
-  // @HostListener('unloaded')
-  // ngOnDestroy() {
-  //   console.log('Items destroyed');
-  // }
-
-
   iniciarSesion(): void {
     this.authService.iniciarSesion(this.formLogin.value).then((error) => {
       if (error.code !== false) {

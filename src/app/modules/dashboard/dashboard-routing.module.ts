@@ -10,6 +10,9 @@ const routes: Routes = [
       },
       {
         path: 'crear-grupo', loadChildren: () => import('./crear-grupo/crear-grupo.module').then(m => m.CrearGrupoModule)
+      },
+      {
+        path: 'grupo/:id', loadChildren: () => import('./grupo/grupo.module').then(m => m.GrupoModule)
       }
     ]
   }

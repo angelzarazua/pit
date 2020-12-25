@@ -10,9 +10,10 @@ import { RouterModule } from '@angular/router';
   declarations: [InicioComponent],
   imports: [
     CommonModule,
-    InicioRoutingModule
+    RouterModule,
+    InicioRoutingModule,
   ],
-  exports: [RouterModule]
+  // exports: [RouterModule]
 
 })
 export class InicioModule { }
