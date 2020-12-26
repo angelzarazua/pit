@@ -6,6 +6,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { DashboardComponent } from './dashboard.component';
 import { GrupoComponent } from './grupo/grupo.component';
 import { FormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FontIconsModule } from 'src/app/shared/font-icons/font-icons.module';
 
 
 @NgModule({
@@ -13,7 +15,9 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    FormsModule
+    FormsModule,
+    FontAwesomeModule,
+    FontIconsModule    
   ]
 })
 export class DashboardModule { }

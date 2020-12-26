@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { InicioRoutingModule } from './inicio-routing.module';
 import { InicioComponent } from './inicio.component';
 import { RouterModule } from '@angular/router';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     RouterModule,
     InicioRoutingModule,
+    FontAwesomeModule,
   ],
   // exports: [RouterModule]
 
