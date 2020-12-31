@@ -1,23 +1,12 @@
-<div class="container">
+<div class="container" *ngIf="!cargando">
     <div class="row mt-3">
         <div class="col-md-8 col-sm-12 d-flex align-items-center">
-            <!-- <div class="row">
-                <div class="col-md-10 col-sm-10">
-                    <div *ngIf="!editar">
-                        <h2>{{ nombre }}</h2>
-                    </div>
-                    <div *ngIf="editar">
-                        <input  class="h2 sinPadding" [(ngModel)]="nombre">
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-2">
-                    <button class="btn btn-primary btn-sm" (click)="aparecerInput()">{{ textButton }}</button>
-                </div>
-            </div> -->            
-            <h2 *ngIf="!editar">{{ nombre }}</h2>
-            <input class="h2 sinPadding" [(ngModel)]="nombre" *ngIf="editar">
-
-            <button class="btn btn-primary btn-sm ml-2" (click)="aparecerInput()">{{ textButton }}</button>
+            <h2 *ngIf="!editarNombre">{{ nombre }}</h2>
+            <input class="h2 sinPadding" [(ngModel)]="nombre" *ngIf="editarNombre">
+            
+            <button>
+                <fa-icon [icon]="iconNombre" (click)="aparecerInput('nombre')"></fa-icon>
+            </button>
         </div>
         <div class="col-md-4 col-sm-12 d-flex justify-content-md-end align-items-center">
             <div>Código de grupo: {{ grupo?.codigo_grupo }} </div>
@@ -25,8 +14,21 @@
     </div>
 
     <div class="row mt-3">
-        <div class="col-12">
-            <h6>{{ grupo?.descripcion }}</h6>
+        <div class="col-md-12 d-flex align-items-center">
+            <div>
+                <h6 *ngIf="!editarDescripcion">{{ descripcion }}</h6>
+            </div>
+            <input class="h6 sinPadding" [(ngModel)]="descripcion" *ngIf="editarDescripcion">
+            <button class="margin" (click)="aparecerInput('descripcion')">
+                <fa-icon [icon]="iconDescripcion" size="xs"></fa-icon>
+            </button>
         </div>
+    </div>
+</div>
+
+
+<div class="container" *ngIf="cargando">
+    <div class="row justify-content-center tamanio align-items-center">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
     </div>
 </div>

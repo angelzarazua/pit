@@ -13,9 +13,14 @@ import { Grupo } from 'src/app/shared/models/local';
 export class GrupoComponent implements OnInit {
   grupo: Grupo;
   grupoId: string;
-  nombre = ''
-  editar: boolean = false;
-  textButton = 'Edit'
+  nombre: string = ''
+  descripcion: string = ''
+  cargando: boolean = true;
+  editarNombre: boolean = false;
+  editarDescripcion: boolean = false;
+  iconDescripcion: string = "pen"
+  iconNombre: string = "pen"
+  nameChange: string = ''
 
   constructor(
     private grupoSerevice: GruposService,
@@ -25,6 +30,8 @@ export class GrupoComponent implements OnInit {
   async ngOnInit() {
     await this.obtenerGrupo()
     this.nombre = this.grupo.nombre
+    this.nameChange = this.grupo.nombre
+    this.descripcion = this.grupo.descripcion
   }
 
   obtenerGrupo() {
@@ -35,23 +42,33 @@ export class GrupoComponent implements OnInit {
           return this.grupoSerevice.obtenerGrupoPorId(this.grupoId);
         })
       ).subscribe((res: Grupo) => {
+        this.cargando = false;
         resolve(this.grupo = res)
       })
     })
 
   }
 
-  aparecerInput() {
-    console.log('Hola');
-    if (!this.editar) {
-      this.editar = true
-      this.textButton = 'List'  
-    } else {
-      this.editar = false
-      this.textButton = 'Edit'
-    }  
+  aparecerInput(tipo: string) {
+    this.nombre = (this.nombre).trim();
 
+    if (tipo == 'nombre') {
+      this.iconNombre == 'check' && this.nameChange != (this.nombre).trim() ? this.editarGrupo() : null
+      this.iconNombre = this.iconNombre == 'check' ? 'pen' : 'check'
+
+      this.editarNombre = !this.editarNombre
+    } else {
+      this.iconDescripcion == 'check' ? this.editarGrupo() : null
+      this.iconDescripcion = this.iconDescripcion == 'check' ? 'pen' : 'check'
+      this.editarDescripcion = !this.editarDescripcion
+    }
   }
 
-
+  editarGrupo() {
+    this.nameChange = (this.nombre).trim();
+    console.log('Entro a editar');
+    this.grupo.nombre = (this.nombre).trim();
+    this.grupo.descripcion = (this.descripcion).trim();
+    this.grupoSerevice.editarGrupo(this.grupo, this.grupoId).subscribe()
+  }
 }

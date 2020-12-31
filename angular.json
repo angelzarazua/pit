@@ -19,7 +19,7 @@
           "options": {
             "allowedCommonJsDependencies": [
               "@angular/fire/firestore"
-           ],
+            ],
             "outputPath": "dist/pit",
             "index": "src/index.html",
             "main": "src/main.ts",

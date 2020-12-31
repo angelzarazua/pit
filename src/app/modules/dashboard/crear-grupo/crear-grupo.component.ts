@@ -49,14 +49,14 @@ export class CrearGrupoComponent implements OnInit {
       updated_at: null
     }
     console.log('Grupo: ', grupo);
-    setTimeout(() => {
-      this.show = false
-      this.router.navigate(['/inicio']);
-    }, 4000);
-    // this.grupoSerevice.crearGrupo(grupo, this.uid).then(() => {
-    //   console.log('Se creó');
+    // setTimeout(() => {
+    //   this.show = false
     //   this.router.navigate(['/inicio']);
-    // });
+    // }, 4000);
+    this.grupoSerevice.crearGrupo(grupo, this.uid).then(() => {
+      console.log('Se creó');
+      this.router.navigate(['/inicio']);
+    });
   }
 
 

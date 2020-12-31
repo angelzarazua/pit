@@ -7,11 +7,13 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireFunctionsModule, USE_EMULATOR } from '@angular/fire/functions';
 import { environment } from 'src/environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { IniciarSesionComponent } from './modules/auth/iniciar-sesion/iniciar-sesion.component';
 import { RegistrarseComponent } from './modules/auth/registrarse/registrarse.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,10 +28,16 @@ import { RegistrarseComponent } from './modules/auth/registrarse/registrarse.com
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
     AngularFireAuthModule,
-    FormsModule,
+    AngularFireFunctionsModule,
+    HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
+    
   ],
-  providers: [DatePipe],
+  providers: [
+    DatePipe,
+    // { provide: USE_EMULATOR, useValue: ['localhost', 5001] }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

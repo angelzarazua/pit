@@ -1,31 +1,25 @@
-import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Grupo, Usuario_Grupo, Rol } from '../../../shared/models/local';
-import { Router } from '@angular/router';
-import { IService } from 'src/app/shared/interfaces/IService';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-
+import { AngularFireFunctions } from '@angular/fire/functions';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class GruposService {
-  private refCollectionGrupos: AngularFirestoreCollection<Grupo>;
   private refCollectionGruposUsuarios: AngularFirestoreCollection<Usuario_Grupo>;
-  private pathGrupos = "grupos";
+  private refCollectionGrupos: AngularFirestoreCollection<Grupo>;
   private pathGruposUsuarios = "usuarios_grupos";
+  private pathGrupos = "grupos";
   private batch = this.afs.firestore.batch()
-
-
 
 
   constructor(
     private afs: AngularFirestore,
-    private datepipe: DatePipe,
-    private router: Router,
+    private fns: AngularFireFunctions
   ) {
     this.refCollectionGrupos = this.afs.collection<Grupo>(this.pathGrupos);
     this.refCollectionGruposUsuarios = this.afs.collection<Usuario_Grupo>(this.pathGruposUsuarios)
@@ -51,15 +45,15 @@ export class GruposService {
     }
   }
 
-  // async editarGrupo(grupo: Grupo) {
-  //   try {
-  //     await this.refCollectionGrupos.doc(grupo.id).update(grupo)
-  //     console.log("Document successfully updated!");
-  //   } catch (error) {
-  //     The document probably doesn't exist.
-  //     console.error("Error updating document: ", error);
-  //   }
-  // }
+  editarGrupo(grupo: Grupo, id: string): Observable<any> {
+    console.log('Entro al service');
+    const callable = this.fns.httpsCallable('editarGrupo');
+    const data$ = callable({
+      id,
+      grupo
+    });
+    return data$
+  }
 
   obtenerGruposPorIdUsuario(usuarioId: string)/*: AngularFirestoreCollection<Usuario_Grupo>*/ {
     return this.afs.collection(this.pathGruposUsuarios, ref =>
