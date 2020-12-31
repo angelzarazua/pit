@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { GruposService } from 'src/app/core/services/grupos/grupos.service';
-import { Usuario } from '../../../shared/models/local';
 
 
 @Component({
@@ -13,6 +12,7 @@ export class InicioComponent implements OnInit {
   // usuario = of(localStorage.getItem('usuario'))
   uid: string = localStorage.getItem('uid')
   grupos: any = []
+  grupo_id: string = ""
 
   constructor(private grupoSerevice: GruposService) { }
 
@@ -27,13 +27,7 @@ export class InicioComponent implements OnInit {
       console.log(res);
     })
   }
-
-  irGrupo(grupoId: string) {
-    console.log(grupoId);
-    this.obtenerGrupoPorId(grupoId)
-    
-  }
-
+  
   obtenerGrupoPorId(grupoId: string) {
     this.grupoSerevice.obtenerGrupoPorId(grupoId).subscribe(res => {
       console.log(res);      

@@ -6,6 +6,16 @@
           "pit-app"
         ]
       }
+    },
+    "pitt-app": {
+      "hosting": {
+        "pit": [
+          "pitt-app"
+        ]
+      }
     }
+  },
+  "projects": {
+    "default": "pitt-app"
   }
 }

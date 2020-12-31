@@ -1,18 +1,41 @@
-<!-- <div class="container">
-    <h1 class="mt-3">Grupos</h1>
-
-    <div class="row">
-        <div *ngFor="let grupo of grupos">
-            <div class="col mt-4">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="..." alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{grupo.nombre}}</h5>
-                        <p class="card-text">{{ grupo.descripcion }}</p>
-                        <a [routerLink]="" class="btn btn-primary">Ir</a>
-                    </div>
-                </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <form class="login100-form mi-padding validate-form" [formGroup]="formNuevoGrupo">
+            <span class="login100-form-title p-b-43">
+                Nuevo grupo
+            </span>
+            <!-- <div class="col mt-4">
+            </div> -->
+            <div class="wrap-input100">
+                <input class="input100" type="text" formControlName="nombre">
+                <span class="focus-input100"></span>
+                <span class="label-input100">Nombre del Grupo</span>
             </div>
-        </div>
+            <div class="validation-errors">
+                <ng-container *ngFor="let validation of validationMessages.nombre">
+                    <div class="error-message alert alert-danger"
+                        *ngIf="formNuevoGrupo.get('nombre').hasError(validation.type) && (formNuevoGrupo.get('nombre').dirty || formNuevoGrupo.get('nombre').touched)">
+                        {{ validation.message }}
+                    </div>
+                </ng-container>
+            </div>
+
+            <div class="wrap-input100 ">
+                <input class="input100" type="text" name="descripcion" formControlName="descripcion">
+                <span class="focus-input100"></span>
+                <span class="label-input100">Descripción</span>
+            </div>
+
+            <div class="container-login100-form-btn">
+                <button class="btn login100-form-btn" (click)="crearGrupo()" type="submit" *ngIf="!show"
+                    [disabled]="formNuevoGrupo.invalid"> Crear Grupo </button>
+
+                    <button class="btn login100-form-btn" *ngIf="show" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Creando...
+                    </button>
+            </div>
+
+        </form>
     </div>
-</div> -->
+</div>
