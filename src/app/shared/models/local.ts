@@ -17,7 +17,7 @@ export interface Grupo {
     descripcion: string,
     asignaturas: string[],
     created_at: Date,
-    updated_at: Date
+    updated_at?: Date
 }
 
 export interface Usuario_Grupo {
@@ -27,7 +27,7 @@ export interface Usuario_Grupo {
     descripcion: string,
     roles: Rol[],
     created_at: Date,
-    updated_at: Date
+    updated_at?: Date
 }
 
 export enum Rol {

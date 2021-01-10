@@ -9,5 +9,7 @@ export const environment = {
     messagingSenderId: "272807089126",
     appId: "1:272807089126:web:68b7f4f549302f9d67bc27",
     measurementId: "G-FHQDGNFKW1"
-  }
+  },
+
+  useEmulators: false
 };

@@ -13,7 +13,7 @@ const routes: Routes = [
       },
       {
         path: 'grupo/:id', loadChildren: () => import('./grupo/grupo.module').then(m => m.GrupoModule)
-      }
+      },
     ]
   }
 ];

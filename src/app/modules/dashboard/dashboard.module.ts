@@ -15,9 +15,9 @@ import { FontIconsModule } from 'src/app/shared/font-icons/font-icons.module';
   imports: [
     CommonModule,
     DashboardRoutingModule,
-    FormsModule,
+    // FormsModule,
     FontAwesomeModule,
     FontIconsModule,
-  ]
+  ],
 })
 export class DashboardModule { }

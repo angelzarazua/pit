@@ -4,10 +4,12 @@
     "lint": "eslint \"src/**/*\"",
     "build": "tsc",
     "serve": "npm run build && firebase emulators:start --only functions",
+    "emulator": "npm run build && firebase emulators:start --import=../data_firebase --only functions,firestore",
     "shell": "npm run build && firebase functions:shell",
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
-    "logs": "firebase functions:log"
+    "logs": "firebase functions:log",
+    "export-firebase-data": "firebase emulators:export ../data_firebase"
   },
   "engines": {
     "node": "12"
