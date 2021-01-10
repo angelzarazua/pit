@@ -32,6 +32,8 @@ export class GrupoComponent implements OnInit {
     this.nombre = this.grupo.nombre
     this.nameChange = this.grupo.nombre
     this.descripcion = this.grupo.descripcion
+    console.log(this.nombre, ' ', this.descripcion);
+    
   }
 
   obtenerGrupo() {

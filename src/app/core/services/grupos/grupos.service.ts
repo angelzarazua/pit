@@ -14,7 +14,7 @@ export class GruposService {
   private refCollectionGrupos: AngularFirestoreCollection<Grupo>;
   private pathGruposUsuarios = "usuarios_grupos";
   private pathGrupos = "grupos";
-  private batch = this.afs.firestore.batch()
+  
 
 
   constructor(
@@ -29,13 +29,14 @@ export class GruposService {
 
   async crearGrupo(grupo: Grupo, usuarioId: string) {
     try {
+      const batch = this.afs.firestore.batch()
       grupo.created_at = new Date()
       const docRef = await this.refCollectionGrupos.add(grupo)
       const rol = Rol.admin
       grupo.codigo_grupo = docRef.id.substring(0, 6)
       console.log('crear grupo');
-      this.batch.update(this.refCollectionGrupos.doc(docRef.id).ref, grupo)
-      await this.batch.commit()
+      batch.update(this.refCollectionGrupos.doc(docRef.id).ref, grupo)
+      await batch.commit()
       const usuarioGrupo = this.crearUsuarioGrupo(usuarioId, docRef.id, rol, grupo.nombre, grupo.descripcion)
       await this.enlazarUsuarioConGrupo(usuarioGrupo)
       // this.router.navigate(['/inicio']);
@@ -77,19 +78,27 @@ export class GruposService {
       descripcion: descripcion,
       roles: [rol],
       created_at: new Date(),
-      updated_at: null
     }
     return usuarioGrupo
   }
 
   async enlazarUsuarioConGrupo(usuarioGrupo: Usuario_Grupo) {
     try {
-      const docRef = await this.refCollectionGruposUsuarios.add(usuarioGrupo)
+      await this.refCollectionGruposUsuarios.add(usuarioGrupo)
       // usuarioGrupo.id = docRef.id
       // await this.editarUsuarioGrupo(usuarioGrupo)
     } catch (error) {
       console.error("Error al enlazar Usuario con Grupo: ", error);
     }
+  }
+
+  agregarUsuarioAGrupo(uid: string, codigoGrupo: string) {
+    const callable = this.fns.httpsCallable('agregarUsuarioAGrupo');
+    const data$ = callable({
+      uid,
+      codigoGrupo
+    });
+    return data$;
   }
 
 }

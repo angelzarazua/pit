@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Usuario } from '../../../shared/models/local';
 
 
@@ -21,15 +21,11 @@ export class AuthService {
     private router: Router,
     private datepipe: DatePipe
   ) {
-    this.pathCollectionUsuarios = this.afs.collection("usuarios");
-    const usuario = localStorage.getItem('uid')
-    if (usuario != null || usuario != undefined) {
-      this.loggedIn.next(true);
-    }
+    this.verificar();
   }
 
   get isLoggedIn() {
-    return this.loggedIn.asObservable()
+    return this.loggedIn.asObservable();
   }
 
   async crearUsuario(usuario: Usuario, password: string) {
@@ -47,7 +43,7 @@ export class AuthService {
     }
   }
 
-  async iniciarSesion(usuario) {
+  async iniciarSesion(usuario: { email: string; password: string; }) {
     try {
       const res = await this.afAuth.signInWithEmailAndPassword(usuario.email, usuario.password);
       this.getUsuario(res.user.uid).then(() => {
@@ -118,16 +114,27 @@ export class AuthService {
     })
   }
 
-  isLogged() {
-    this.afAuth.user.subscribe(user => {
-      console.log('isLogged: ', user);
-      if (user != null) {
-        this.loggedIn.next(true);
-      } else {
-        this.loggedIn.next(false);
-      }
+  async verificar() {
+    // await this.isLogged()
+    this.pathCollectionUsuarios = this.afs.collection("usuarios");
+    const usuario = localStorage.getItem('uid');
+    if (usuario != null || usuario != undefined) {
+      this.loggedIn.next(true);
+    }
+  }
 
-    });
+  isLogged() {
+    return new Promise(() => {
+      this.afAuth.user.subscribe(user => {
+        console.log('isLogged: ', user);
+        if (user != null) {
+          this.loggedIn.next(true);
+        } else {
+          this.loggedIn.next(false);
+        }
+      });
+    })
+
   }
 }
 

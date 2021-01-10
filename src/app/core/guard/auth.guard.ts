@@ -21,11 +21,12 @@ export class AuthGuard implements CanActivate {
       take(1),
       map((isLoggedIn: boolean) => {
         console.log('En canActivate: ', isLoggedIn);
-        if (!isLoggedIn) {
-          this.router.navigate(['/iniciar-sesion']);
+        if (!isLoggedIn) { // Si no está logueado cierra una posible sesión o no deja navegar y lo lleva a iniciar sesión
+          // this.router.navigate(['/iniciar-sesion']);
+          this.afAuth.cerrarSesion();
           return false
         }
-        return true;
+        return true; // Si está logueado permite navegar a la página
       })
     );
   }

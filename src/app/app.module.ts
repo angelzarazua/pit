@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestoreModule, USE_EMULATOR as USE_FIRESTORE_EMULATOR } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireFunctionsModule, USE_EMULATOR } from '@angular/fire/functions';
 import { environment } from 'src/environments/environment';
@@ -32,13 +32,14 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    
+
   ],
   providers: [
     DatePipe,
-    // { provide: USE_EMULATOR, useValue: ['localhost', 5001] }
+    { provide: USE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 5001]: undefined },
+    // { provide: USE_FIRESTORE_EMULATOR, useValue: environment.useEmulators ? ['localhost', 8080] : undefined },
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
- }
+}

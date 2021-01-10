@@ -1,12 +1,13 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+import { API_KEY } from 'variables';
 
 export const environment = {
   production: false,
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
   firebaseConfig: {
-    apiKey: "AIzaSyAOUMVhHJVR34B-Y2qzVO3eidiwr3_d5vo",
+    apiKey: API_KEY,
     authDomain: "pitt-app.firebaseapp.com",
     databaseURL: "https://pitt-app.firebaseio.com",
     projectId: "pitt-app",
@@ -18,7 +19,9 @@ export const environment = {
 
   urlDev: {
     editarGrupo: "http://localhost:5001/pitt-app/us-central1/editarGrupo"
-  }
+  },
+
+  useEmulators: true
 };
 
 /*
